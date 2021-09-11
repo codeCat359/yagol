@@ -26,7 +26,7 @@ public class main
     {
         System.out.print("working.\n");
 
-        LifeArray la = new LifeArray(50, 50, 0 /* NEEDS CHANGED*/);
+        LifeArray la = new LifeArray(100, 100, 0 /* NEEDS CHANGED*/);
 
         JFrame jf = new JFrame();
         DisplayPanel dp = BuildDisplayPanel(jf, la);
@@ -56,7 +56,8 @@ public class main
                 {
                     if (e.getButton() == MouseEvent.BUTTON1)
                     {
-                        la.ToggleSquare(e.getX() / (dp.getWidth() / la.GetX()), e.getY() / (dp.getHeight() / la.GetY()));
+                        //la.ToggleSquare(e.getX() / (dp.getWidth() / la.GetX()), e.getY() / (dp.getHeight() / la.GetY()));
+                        dp.HandleClick(e.getX(), e.getY());
                     }
                 }
             });

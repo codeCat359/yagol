@@ -11,12 +11,16 @@ import java.awt.Color;
 import java.awt.Graphics;
 import Game_of_Life_Modified.GameLoop;
 import Game_of_Life_Modified.LifeArray;
+import java.util.ArrayList;
+import java.util.Iterator;
 
 //*************************************************************
 //*************************************************************
 public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displayer
 {
     LifeArray la;
+    ArrayList<Integer> xSizes;
+    ArrayList<Integer> ySizes;
     //test variables that kept debug notes from firing EVERY cycle
     //int test = 0;
     //int testMod = 1000;
@@ -72,6 +76,11 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
         //more debug info
         //StringBuilder sb = new StringBuilder("Extra Pixels added at height: ");
 
+        //hold an array containing the sizes of the squares
+        //for the LifeArray in order
+        xSizes = new ArrayList<Integer>();
+        ySizes = new ArrayList<Integer>();
+
         try
         {
             //tally the extra pixels that have been added on the Y axis
@@ -86,10 +95,14 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
                     //sb.append(i + " ");
                 }
 
+                //store the size of the cell on the Y axis
+                ySizes.add(thisHeight / la.GetY() + addPixH);
+
                 //tally the extra pixels that have been added on the X axis
                 int xtraPixAddedW = 0;
                 for (int j = 0; j < la.GetX(); j++)
                 {
+
                     //change this to one if we need an extra pixel this round
                     int addPixW = 0;
                     //if ((int)xtraPixWidth != 0 && j % (int) xtraPixWidth == 0)
@@ -97,6 +110,14 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
                     {
                         addPixW = 1;
                     }
+
+                    //store the widths for the first run-through only
+                    if (i == 0)
+                    {
+                        //store the size of the cell on the X axis
+                        xSizes.add(thisWidth / la.GetX() + addPixW);
+                    }
+
                     g.setColor(la.GetCellValue(j, i) ? Color.BLACK : Color.WHITE);
                     g.fillRect(j * (thisWidth / la.GetX()) + xtraPixAddedW, i * (thisHeight / la.GetY()) + xtraPixAddedH, thisWidth / la.GetX() + addPixW, thisHeight / la.GetY() + addPixH);
                     //System.out.print(i + " " + j + "\n");
@@ -136,5 +157,53 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
     public LifeArray GetLifeArray()
     {
         return la;
+    }
+
+    //*************************************************************
+    public void HandleClick(int xPos, int yPos)
+    {
+        System.out.print("xPos=" + xPos + " yPos=" + yPos + "\n");
+        Iterator<Integer> it = ySizes.iterator();
+        int rollingSum = 0;
+        int ySquare = -1;
+        while(it.hasNext())
+        {
+            if (rollingSum <= yPos)
+            {
+                rollingSum += it.next();
+                ySquare++;
+                System.out.print("rollingSum=" + rollingSum + " and ySquare=" + ySquare + "\n");
+            }
+            //just consume the .next()
+            else
+            {
+                it.next();
+            }
+        }
+
+        it = xSizes.iterator();
+        rollingSum = 0;
+        int xSquare = -1;
+        while(it.hasNext())
+        {
+            if (rollingSum <= xPos)
+            {
+                rollingSum += it.next();
+                xSquare++;
+                System.out.print("rollingSum=" + rollingSum + " and xSquare=" + xSquare + "\n");
+            }
+            //just consume the .next()
+            else
+            {
+                it.next();
+            }
+        }
+
+        la.ToggleSquare(xSquare, ySquare);
+
+        System.out.print(xSizes + "\n");
+        System.out.print(ySizes + "\n");
+
+        return;
     }
 }
