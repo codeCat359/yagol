@@ -160,11 +160,18 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
     }
 
     //*************************************************************
+    //find the correct square to toggle based on the coordinates of the mouse click
     public void HandleClick(int xPos, int yPos)
     {
-        System.out.print("xPos=" + xPos + " yPos=" + yPos + "\n");
+        //start it up
+        //System.out.print("xPos=" + xPos + " yPos=" + yPos + "\n");
+
+
         Iterator<Integer> it = ySizes.iterator();
+
+        //rollingSum will be the total of all cell sizes prior to this one
         int rollingSum = 0;
+        //starts at negative one since we don't want to worry about setting rollingSum to the bounds of the first square
         int ySquare = -1;
         while(it.hasNext())
         {
@@ -172,7 +179,7 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
             {
                 rollingSum += it.next();
                 ySquare++;
-                System.out.print("rollingSum=" + rollingSum + " and ySquare=" + ySquare + "\n");
+                //System.out.print("rollingSum=" + rollingSum + " and ySquare=" + ySquare + "\n");
             }
             //just consume the .next()
             else
@@ -181,8 +188,10 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
             }
         }
 
+        //another loop to handle the width direction horizontally
         it = xSizes.iterator();
         rollingSum = 0;
+        //starts at negative one since we don't want to worry about setting rollingSum to the bounds of the first square
         int xSquare = -1;
         while(it.hasNext())
         {
@@ -190,7 +199,7 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
             {
                 rollingSum += it.next();
                 xSquare++;
-                System.out.print("rollingSum=" + rollingSum + " and xSquare=" + xSquare + "\n");
+                //System.out.print("rollingSum=" + rollingSum + " and xSquare=" + xSquare + "\n");
             }
             //just consume the .next()
             else
@@ -199,10 +208,11 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
             }
         }
 
+        //flips the bit for the clicked square on the array itself, now that we know where that is
         la.ToggleSquare(xSquare, ySquare);
 
-        System.out.print(xSizes + "\n");
-        System.out.print(ySizes + "\n");
+        //System.out.print(xSizes + "\n");
+        //System.out.print(ySizes + "\n");
 
         return;
     }

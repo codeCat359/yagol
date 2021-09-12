@@ -14,6 +14,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import Game_of_Life_Modified.GameLoop;
 import Game_of_Life_Modified.LifeArray;
+import javax.swing.SwingUtilities;
+import java.awt.Point;
 
 //*************************************************************
 //*************************************************************
@@ -57,6 +59,11 @@ public class main
                     if (e.getButton() == MouseEvent.BUTTON1)
                     {
                         //la.ToggleSquare(e.getX() / (dp.getWidth() / la.GetX()), e.getY() / (dp.getHeight() / la.GetY()));
+
+                        //convert the point's coordinates from a position on the window to a position on the jframe, and pass that in
+                        //not necessary because the mouse listener is on the DisplayPanel itself. I think.
+                       /// Point p = SwingUtilities.convertPoint(jf, e.getX(), e.getY(), dp);
+                        //dp.HandleClick(p.x, p.y);
                         dp.HandleClick(e.getX(), e.getY());
                     }
                 }
