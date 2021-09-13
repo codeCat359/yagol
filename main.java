@@ -28,7 +28,12 @@ public class main
     {
         System.out.print("working.\n");
 
-        LifeArray la = new LifeArray(100, 100, 0 /* NEEDS CHANGED*/);
+        //this way the x and y are the same length and i know whats going on
+        int squareDimension = 200;
+
+        int updateInterval = 1000;
+
+        LifeArray la = new LifeArray(squareDimension, squareDimension, updateInterval);
 
         JFrame jf = new JFrame();
         DisplayPanel dp = BuildDisplayPanel(jf, la);
@@ -83,8 +88,9 @@ public class main
                     {
                         System.out.print("'SPACE' pressed!!!!\n");
                         //la.PrintNeighborhoods();
-                        la.IterateBoard();
-                        dp.Display(0);
+                        //la.IterateBoard();
+                        //dp.Display(0);
+                        la.togglePause();
                     }
                 };
                 public void keyReleased(KeyEvent ke)

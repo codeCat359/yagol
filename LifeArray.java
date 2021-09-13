@@ -16,8 +16,13 @@ public class LifeArray implements Updater
     boolean[][] lifeArray;
     int x, y;
     double lastUpdateTime, updateInterval;
+    //the board will not update while pause is true
+    boolean pause;
 
     //*************************************************************
+    //parameters:
+    //  xSize, ySize- the dimensions in cells of the life array
+    //  _updateInterval- frequency in milliseconds which the array will progress one tick
     public LifeArray(int xSize, int ySize, int _updateInterval)
     {
         lifeArray = new boolean[ySize][xSize];
@@ -32,6 +37,26 @@ public class LifeArray implements Updater
 
         x = xSize;
         y = ySize;
+
+        pause = true;
+    }
+
+    //*************************************************************
+    public double getUpdateInterval()
+    {
+        return updateInterval;
+    }
+
+    //*************************************************************
+    public void setUpdateInterval(double newUI)
+    {
+        updateInterval = newUI;
+    }
+
+    //*************************************************************
+    public void togglePause()
+    {
+        pause = !pause;
     }
 
     //*************************************************************
@@ -157,9 +182,9 @@ public class LifeArray implements Updater
     //*************************************************************
     public void Update(double currentTimeTicks)
     {
-        if (currentTimeTicks - lastUpdateTime > updateInterval)
+        if (!pause && currentTimeTicks - lastUpdateTime > updateInterval)
         {
-            //IterateBoard();
+            IterateBoard();
 
             lastUpdateTime = currentTimeTicks;
         }
