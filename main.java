@@ -12,8 +12,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import Game_of_Life_Modified.GameLoop;
-import Game_of_Life_Modified.LifeArray;
+//import Game_of_Life_Modified.LifeArray;
 import javax.swing.SwingUtilities;
 import java.awt.Point;
 
@@ -21,8 +20,6 @@ import java.awt.Point;
 //*************************************************************
 public class main
 {
-    static GameLoop gameLoop;
-
     //*************************************************************
     public static void main(String args[])
     {
@@ -33,11 +30,11 @@ public class main
 
         int updateInterval = 1000;
 
-        LifeArray la = new LifeArray(squareDimension, squareDimension, updateInterval);
+        //LifeArray la = new LifeArray(squareDimension, squareDimension, updateInterval);
 
         JFrame jf = new JFrame();
-        DisplayPanel dp = BuildDisplayPanel(jf, la);
-        BuildGameLoop();
+        DisplayPanel dp = BuildDisplayPanel(jf, squareDimension, updateInterval);//, la);
+        //BuildGameLoop();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.pack();
 
@@ -45,15 +42,15 @@ public class main
 
         jf.setVisible(true);
 
-        gameLoop.GameLoop(la, dp);
+        dp.run();
 
         return;
     }
 
     //*************************************************************
-    private static DisplayPanel BuildDisplayPanel(JFrame jf, LifeArray la)
+    private static DisplayPanel BuildDisplayPanel(JFrame jf, int squareDimension, int updateInterval)//, LifeArray la)
     {
-        DisplayPanel dp = new DisplayPanel(la);
+        DisplayPanel dp = new DisplayPanel(squareDimension, squareDimension, updateInterval);
         jf.add(dp);
 
         //-------
@@ -90,7 +87,8 @@ public class main
                         //la.PrintNeighborhoods();
                         //la.IterateBoard();
                         //dp.Display(0);
-                        la.togglePause();
+                        //la.togglePause();
+                        dp.pauseButton();
                     }
                 };
                 public void keyReleased(KeyEvent ke)
@@ -104,11 +102,4 @@ public class main
         return dp;
     }
 
-    //*************************************************************
-    private static void BuildGameLoop()
-    {
-        gameLoop = new GameLoop();
-
-        return;
-    }
 }

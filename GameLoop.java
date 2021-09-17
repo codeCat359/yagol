@@ -36,7 +36,7 @@ public class GameLoop
     }
 
     //**************************************************************
-    public void GameLoop(Updater _Updater, Displayer _Displayer)
+    public void runLoop(Updater _Updater, Displayer _Displayer)
     {
         double next_game_tick = System.currentTimeMillis();
         int loops;

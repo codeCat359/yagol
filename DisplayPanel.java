@@ -18,6 +18,7 @@ import java.util.Iterator;
 //*************************************************************
 public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displayer
 {
+    GameLoop gameLoop;
     LifeArray la;
     ArrayList<Integer> xSizes;
     ArrayList<Integer> ySizes;
@@ -26,9 +27,12 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
     //int testMod = 1000;
 
     //*************************************************************
-    public DisplayPanel(LifeArray lifeArray)
+    public DisplayPanel(int jfsquareDimension, int squareDimension, int updateInterval)//LifeArray lifeArray)
     {
-        la = lifeArray;
+        //la = lifeArray;
+        la = new LifeArray(jfsquareDimension, squareDimension, updateInterval);
+
+        gameLoop = new GameLoop();
 
         return;
     }
@@ -215,5 +219,17 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
         //System.out.print(ySizes + "\n");
 
         return;
+    }
+
+    //*************************************************************
+    public void pauseButton()
+    {
+        la.togglePause();
+    }
+
+    //*************************************************************
+    public void run()
+    {
+        gameLoop.runLoop(la, this);
     }
 }
