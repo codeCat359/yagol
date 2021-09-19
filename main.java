@@ -26,14 +26,34 @@ public class main
         System.out.print("working.\n");
 
         //this way the x and y are the same length and i know whats going on
-        int squareDimension = 200;
+        //int squareDimension = 200;
+
+        //System.out.print(args[0] + "   " + args[1] + "\n");
+
+        int width, length;
+
+        if (args.length == 1)
+        {
+            width = Integer.parseInt(args[0]);
+            length = width;
+        }
+        else if (args.length >= 2)
+        {
+            width = Integer.parseInt(args[0]);
+            length = Integer.parseInt(args[1]);
+        }
+        else
+        {
+            width = 400;
+            length = 400;
+        }
 
         int updateInterval = 1000;
 
         //LifeArray la = new LifeArray(squareDimension, squareDimension, updateInterval);
 
         JFrame jf = new JFrame();
-        DisplayPanel dp = BuildDisplayPanel(jf, squareDimension, updateInterval);//, la);
+        DisplayPanel dp = BuildDisplayPanel(jf, width, length, updateInterval);//, la);
         //BuildGameLoop();
         jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         jf.pack();
@@ -48,9 +68,9 @@ public class main
     }
 
     //*************************************************************
-    private static DisplayPanel BuildDisplayPanel(JFrame jf, int squareDimension, int updateInterval)//, LifeArray la)
+    private static DisplayPanel BuildDisplayPanel(JFrame jf, int width, int length, int updateInterval)//, LifeArray la)
     {
-        DisplayPanel dp = new DisplayPanel(squareDimension, squareDimension, updateInterval);
+        DisplayPanel dp = new DisplayPanel(width, length, updateInterval);
         jf.add(dp);
 
         //-------

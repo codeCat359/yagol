@@ -27,10 +27,10 @@ public class DisplayPanel extends JPanel implements Game_of_Life_Modified.Displa
     //int testMod = 1000;
 
     //*************************************************************
-    public DisplayPanel(int jfsquareDimension, int squareDimension, int updateInterval)//LifeArray lifeArray)
+    public DisplayPanel(int width, int length, int updateInterval)//LifeArray lifeArray)
     {
         //la = lifeArray;
-        la = new LifeArray(jfsquareDimension, squareDimension, updateInterval);
+        la = new LifeArray(width, length, updateInterval);
 
         gameLoop = new GameLoop();
 
